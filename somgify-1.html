@@ -1,0 +1,28 @@
+<html>
+<head>
+</head>
+<body style="background: gray;align-content: center;text-align: center;padding-top: 250px" >
+    <h1>Songify</h1>
+    <h4>Welcome , User Enter your details.</h4>
+    
+    <input placeholder="enter name here" type="name" style="height: 40px;padding-left: 10px;" id="user-name" >
+
+    
+    
+    <button  type="submit" style="height: 30px;width:30px;margin-left: 10px;" id="button">GO</button>
+
+<script>
+    
+    var name;
+    var button;
+    button=document.querySelector('#button');
+    button.addEventListener('click',function(){
+        name=document.querySelector('#user-name').value;
+    console.log("name is "+name);
+        alert("hiii  "+name);
+    });
+    
+    
+    </script>
+</body>
+</html>
