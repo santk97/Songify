@@ -1,27 +1,79 @@
 <html>
 <head>
 </head>
-<body style="background: gray;align-content: center;text-align: center;padding-top: 250px" >
+    <style>
+        body{
+            
+            background-image: url("back.jpg");
+            background-position: center;
+            background-attachment: fixed;
+            background-attachment: fixed;
+        }
+        .hidden{
+            
+            display:none;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        
+        }
+        .error{
+            border : red;
+            border-width: 3px;
+            border-style:solid;
+        }
+    </style>
+<body style="align-content: center;text-align: center;padding-top: 250px"  >
     <h1>Songify</h1>
+   
+    <div class="main">
     <h4>Welcome , User Enter your details.</h4>
+        
     
-    <input placeholder="enter name here" type="name" style="height: 40px;padding-left: 10px;" id="user-name" >
-
-    
+    <input placeholder="enter name here" type="name" style="height: 40px;padding-left: 10px;" id="user-name">
     
     <button  type="submit" style="height: 30px;width:30px;margin-left: 10px;" id="button">GO</button>
-
-<script>
+        </div>
+  
+    <div class="welcome hidden">
+        
     
-    var name;
-    var button;
-    button=document.querySelector('#button');
-    button.addEventListener('click',function(){
-        name=document.querySelector('#user-name').value;
-    console.log("name is "+name);
-        alert("hiii  "+name);
-    });
     
+   <h3> you have logged in .... </h3>
+        <h1> </h1>
+        <a href="main.html"></a>
+        <!--<a href="main.html"></a>-->
+    </div>
+<script src="jquery-3.2.1.js"></script>
+<script >
+    
+<!--console.log("hello"); -->
+    //var button;
+     var uname;
+    //button=document.querySelector('#button');
+<!--    console.log(button);-->
+   $('#button').on('click', function()
+                           {
+   
+    uname=$('#user-name').val();
+    console.log(uname);
+    //alert("hii "+uname);
+   
+    var message="welcome "+ uname;
+    if(uname.length>2){
+    $('.main').addClass('hidden');
+    $('.welcome').removeClass('hidden');
+    $('.welcome h1').text(message);  
+    $('.welcome a').text('continue...');    
+    console.log(message);
+    }
+    else{
+        $('#user-name').addClass('error');
+        alert("Wrong entry ...Try again");
+    }
+   
+});
     
     </script>
 </body>

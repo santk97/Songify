@@ -1,0 +1,230 @@
+<html>
+<head>
+</head>
+    <style>
+        table{
+            margin: 20px;
+            padding:20px;
+            background:linear-gradient(to left,  #4ED7AB   , #E3C727 );
+        }
+        th{
+           text-align: center;
+            font-size: 30px;
+            color: crimson;
+        }
+        table, th, td {
+            
+    
+    border-collapse: collapse;
+    
+ 
+}
+ td {
+    padding: 5px;
+     padding-left: 10px;
+     font-size: 20px;
+    text-align: left;
+}
+td{
+opacity:0.5;
+}
+td:hover
+{
+opacity:1.0;
+    background:linear-gradient(to left, #8C7DD1     , #A33C9B  );
+}
+        body{
+            
+            background-image: url("main back.jpg");
+            background-position: center;
+            background-attachment: fixed;
+            background-attachment: fixed;
+        }
+        .hidden{
+            
+            display:none;
+        }
+        footer{
+            
+                        position: absolute;
+                        right: 0px;
+                        bottom: 0px ;
+            
+                        left: 0px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+ opacity:0.7;
+  background: linear-gradient(to left, #69BDB9 , #A53B49);
+  text-align: center;
+            
+        }
+        footer:hover{
+            opacity:1.0;
+        }
+        .current-time{
+           float:left;
+            margin-left:30px;
+            font-size:25px;
+            
+            margin-right:20px;
+        }
+        .time-duration{
+            float:right;
+            margin-right:40px;
+            font-size:25px;
+            
+        } .time-left{
+            float:right;
+            margin-right:40px;
+            font-size:25px;
+            
+        }
+        icons{
+            
+        float:center;
+            padding-left: :5px;
+            padding-right: :5px;
+        }
+    </style>
+    <body>
+        
+        <table style="width:100%">
+  
+  <tr>
+    <th>Name </th>
+    <th>Artist</th>
+    <th>Album</th>
+    <th>Year</th>
+  </tr>
+            <div >
+  <audio src="song.mp3" class="song1" ></audio>
+  <tr >
+    <td id='song1'> Shivam</td>
+    <td>M.M. Keervani</td>
+    <td>Bahubaali 2</td>
+    <td> 2017</td>
+      
+      </div>
+  </tr>
+ 
+</table>
+        
+            
+
+        <footer>
+            <div class="current-time"> </div>
+            <img class="icons "src="play-icon.png"  id='play' style="height:55px;width:34px;">
+            <img  class="icons hidden" src="pause-icon.png"  id='pause'   style="height:55px;width:34px;">
+            <div class="time-duration"></div>
+            <div class="time-left hidden "> </div>
+        
+</footer>
+<script src="jquery-3.2.1.js"></script>
+<script >
+    
+    function fancyTimeFormat(time)
+{   
+    // Hours, minutes and seconds
+    var hrs = ~~(time / 3600);
+    var mins = ~~((time % 3600) / 60);
+    var secs = time % 60;
+
+    // Output like "1:01" or "4:03:59" or "123:03:59"
+    var ret = "";
+
+    if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
+
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs;
+    return ret;
+}
+var song =document.querySelector('.song1');
+    console.log(song);
+    $('#play').on('click',function()
+                       {
+                      playpause();
+    });
+    $('#pause').on('click',function()
+                  {
+      playpause();
+    });
+     $('#song1').on('click',function()
+                       {
+                      playpause();
+    });
+    
+    $('body').on('keypress',function(event)
+                {
+        if (event.keyCode==32)
+            {
+                playpause();
+            }
+      else{
+           playpause();
+            
+            //alert("song paused");
+        }
+            
+    });
+    
+    function updatetime(){
+        //console.log(song.duration);
+        //console.log(song.currentTime);
+        var currrentTime=fancyTimeFormat(Math.floor(song.currentTime));
+        var songDuration=fancyTimeFormat(Math.floor(song.duration));
+         var timeleft=fancyTimeFormat(Math.floor(song.duration-song.currentTime));
+        $('.time-left').text("-"+timeleft);
+        $('.current-time').text(currrentTime);
+        //console.log(songDuration);
+        $('.time-duration').text(songDuration);
+    }
+    
+    window.onload=function(){
+        updatetime();
+     setInterval(function () {
+       //     console.log('timeout');
+        updatetime();
+            
+      },100);
+    }
+    
+     $('.time-duration').on('click',function(){
+                console.log("time-duration clicked");
+        $('.time-duration').addClass('hidden');
+        $('.time-left').removeClass('hidden');
+       
+    });
+    
+    $('.time-left').on('click',function(){
+        console.log("time-left clicked");
+       // $('.time-duration').text(songDuration);
+        $('.time-left').addClass('hidden');
+        $('.time-duration').removeClass('hidden');
+
+    });
+   
+    function playpause(){
+         console.log("playpause called");
+      //  updatetime();
+       // console.log(song);
+         if(song.paused==true){
+                       song.play();
+             console.log("song played");
+                            $('#pause').removeClass('hidden');
+                            $('#play').addClass('hidden');
+              /* $('#pause').removeClass('hidden')('#play').addClass('hidden');   this is  Chaining*/
+         }
+        else if(song.paused==false){
+                            song.pause();
+            console.log("song paused")
+                            $('#play').removeClass('hidden');
+                            $('#pause').addClass('hidden');
+        }
+        
+    }
+    
+    </script>
+</body>
+</html>
