@@ -19,6 +19,11 @@
     
  
 }
+        .currentSong
+        {
+            background:linear-gradient(to left, #EE6521, #21EEEB );
+            opacity:1.0;
+        }
  td {
     padding: 5px;
      padding-left: 10px;
@@ -85,24 +90,38 @@ opacity:1.0;
             padding-left: :5px;
             padding-right: :5px;
         }
+        #slider {
+  margin: 20px;
+            background: :black;
+}
     </style>
     <body>
-        
+       
         <table style="width:100%">
   
-  <tr>
+  <tr >
     <th>Name </th>
     <th>Artist</th>
     <th>Album</th>
     <th>Year</th>
   </tr>
             <div >
-  <audio src="song.mp3" class="song1" ></audio>
-  <tr >
-    <td id='song1'> Shivam</td>
+  <audio src="song.mp3" id="song1" ></audio>
+  <tr id="song1row">
+    <td id='song1name'> Shivam</td>
     <td>M.M. Keervani</td>
     <td>Bahubaali 2</td>
     <td> 2017</td>
+      
+      </div>
+            </tr>
+  <div >
+  <audio src="song2.mp3" id="song2" ></audio>
+  <tr id="song2row">
+    <td id='song2name'> Bulleya</td>
+    <td>Papon</td>
+    <td>Sultan</td>
+    <td> 2016</td>
       
       </div>
   </tr>
@@ -110,12 +129,13 @@ opacity:1.0;
 </table>
         
             
-
+ 
         <footer>
-            <div class="current-time"> </div>
+            
+            <div class="current-time hidden"> </div>
             <img class="icons "src="play-icon.png"  id='play' style="height:55px;width:34px;">
             <img  class="icons hidden" src="pause-icon.png"  id='pause'   style="height:55px;width:34px;">
-            <div class="time-duration"></div>
+            <div class="time-duration hidden"></div>
             <div class="time-left hidden "> </div>
         
 </footer>
@@ -140,41 +160,71 @@ opacity:1.0;
     ret += "" + secs;
     return ret;
 }
-var song =document.querySelector('.song1');
+    var song;
+     song =document.querySelector('#song1name');
+    $('#song1name').on('click',function(){
+        
+        if(song.paused==false){
+                            song.pause();
+            console.log("song paused")
+                            $('#play').removeClass('hidden');
+                            $('#pause').addClass('hidden');
+        }
+         song =document.querySelector('#song1');
+        updatetime(song);
+        playpause(song);
+     $('#song2row').removeClass('currentSong');
+     $('#song1row').addClass('currentSong');
+       // cosole.log(song);
+    });
+    $('#song2name').on('click',function(){
+       if(song.paused==false){
+                            song.pause();
+            console.log("song paused")
+                            $('#play').removeClass('hidden');
+                            $('#pause').addClass('hidden');
+        }
+        
+         song =document.querySelector('#song2');
+        updatetime(song);
+        playpause(song);
+         $('#song1row').removeClass('currentSong');
+        $('#song2row').addClass('currentSong');
+        // cosole.log(song);
+    });
+    
     console.log(song);
     $('#play').on('click',function()
                        {
-                      playpause();
+                      playpause(song);
     });
     $('#pause').on('click',function()
                   {
-      playpause();
+      playpause(song);
     });
-     $('#song1').on('click',function()
-                       {
-                      playpause();
-    });
+     
     
     $('body').on('keypress',function(event)
                 {
         if (event.keyCode==32)
             {
-                playpause();
+                playpause(song);
             }
       else{
-           playpause();
+           playpause(song);
             
             //alert("song paused");
         }
             
     });
     
-    function updatetime(){
+    function updatetime(song){
         //console.log(song.duration);
         //console.log(song.currentTime);
         var currrentTime=fancyTimeFormat(Math.floor(song.currentTime));
         var songDuration=fancyTimeFormat(Math.floor(song.duration));
          var timeleft=fancyTimeFormat(Math.floor(song.duration-song.currentTime));
+       
         $('.time-left').text("-"+timeleft);
         $('.current-time').text(currrentTime);
         //console.log(songDuration);
@@ -182,10 +232,10 @@ var song =document.querySelector('.song1');
     }
     
     window.onload=function(){
-        updatetime();
+       // updatetime(song);
      setInterval(function () {
        //     console.log('timeout');
-        updatetime();
+        updatetime(song);
             
       },100);
     }
@@ -205,8 +255,10 @@ var song =document.querySelector('.song1');
 
     });
    
-    function playpause(){
+    function playpause(song){
          console.log("playpause called");
+         $('.time-left').removeClass('hidden');
+           $('.current-time').removeClass('hidden');
       //  updatetime();
        // console.log(song);
          if(song.paused==true){
@@ -221,9 +273,9 @@ var song =document.querySelector('.song1');
             console.log("song paused")
                             $('#play').removeClass('hidden');
                             $('#pause').addClass('hidden');
-        }
-        
+        }   
     }
+  
     
     </script>
 </body>
